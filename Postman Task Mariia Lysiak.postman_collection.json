@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "ec1b40bb-95b7-4c47-9823-4ecffba28824",
+		"name": "Postman Task Mariia Lysiak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19301020"
+	},
+	"item": [
+		{
+			"name": "Create a user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let user_id = Math.floor(Math.random() * 10000);\r",
+							"\r",
+							"pm.collectionVariables.set(\"userId\", user_id);\r",
+							"\r",
+							"pm.environment.set(\"user_name\", pm.iterationData.get(\"username\"));\r",
+							"\r",
+							"pm.environment.set(\"user_firstName\", pm.iterationData.get(\"firstName\"));\r",
+							"\r",
+							"pm.environment.set(\"user_lastName\", pm.iterationData.get(\"lastName\"));\r",
+							"\r",
+							"pm.environment.set(\"user_email\", pm.iterationData.get(\"email\"));\r",
+							"\r",
+							"pm.environment.set(\"user_password\", pm.iterationData.get(\"password\"));\r",
+							"\r",
+							"pm.environment.set(\"user_phone\", pm.iterationData.get(\"phone\"));\r",
+							"\r",
+							"pm.environment.set(\"user_userStatus\", pm.iterationData.get(\"userStatus\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let json_request = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"console.log(\"Full json request : \", json_request);\r",
+							"\r",
+							"console.log(\"User id : \", json_request.id);\r",
+							"console.log(\"User name : \", json_request.username);\r",
+							"console.log(\"User firstName : \", json_request.firstName);\r",
+							"console.log(\"User lastName : \", json_request.lastName);\r",
+							"console.log(\"User email : \", json_request.email);\r",
+							"console.log(\"User password : \", json_request.password);\r",
+							"console.log(\"User phone : \", json_request.phone);\r",
+							"console.log(\"User status : \", json_request.userStatus);\r",
+							"\r",
+							"let jsonResponse = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify response status is 200\", function(){\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Response body validations\r",
+							"\r",
+							"pm.test(\"Verify response body, code value is\" + jsonResponse.code, function(){\r",
+							"    pm.expect(200).to.eql(jsonResponse.code);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response body, type value is\" + jsonResponse.type, function(){\r",
+							"    pm.expect(\"unknown\").to.eql(jsonResponse.type);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Response header validations\r",
+							"\r",
+							"pm.test(\"Verify response header key Content-Type\", function(){\r",
+							"    pm.expect(\"application/json\").to.eql(pm.response.headers.get(\"Content-Type\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response header key Transfer-Encoding\", function(){\r",
+							"    pm.expect(\"chunked\").to.eql(pm.response.headers.get(\"Transfer-Encoding\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response header key Connection\", function(){\r",
+							"    pm.expect(\"keep-alive\").to.eql(pm.response.headers.get(\"Connection\"));\r",
+							"});\r",
+							"    \r",
+							"\r",
+							"//Response time validation\r",
+							"\r",
+							"pm.test(\"Verify response time is less than 1500\", function(){\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{userId}},\r\n  \"username\": \"{{user_name}}\",\r\n  \"firstName\": \"{{user_firstName}}\",\r\n  \"lastName\": \"{{user_lastName}}\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"phone\": \"{{user_phone}}\",\r\n  \"userStatus\": {{user_userStatus}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/user",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonResponse = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify response status is 200\", function(){\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Response body validations\r",
+							"\r",
+							"pm.test(\"Verify response body, code value is\" + jsonResponse.code, function(){\r",
+							"    pm.expect(200).to.eql(jsonResponse.code);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response body, type value is\" + jsonResponse.type, function(){\r",
+							"    pm.expect(\"unknown\").to.eql(jsonResponse.type);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//Response header validations\r",
+							"\r",
+							"pm.test(\"Verify response header key Content-Type\", function(){\r",
+							"    pm.expect(\"application/json\").to.eql(pm.response.headers.get(\"Content-Type\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response header key Transfer-Encoding\", function(){\r",
+							"    pm.expect(\"chunked\").to.eql(pm.response.headers.get(\"Transfer-Encoding\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response header key Connection\", function(){\r",
+							"    pm.expect(\"keep-alive\").to.eql(pm.response.headers.get(\"Connection\"));\r",
+							"});\r",
+							"    \r",
+							"\r",
+							"//Response time validation\r",
+							"\r",
+							"pm.test(\"Verify response time is less than 1500\", function(){\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{userId}},\r\n  \"username\": \"mariia0107\",\r\n  \"firstName\": \"{{user_firstName}}\",\r\n  \"lastName\": \"{{user_lastName}}\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"phone\": \"{{user_phone}}\",\r\n  \"userStatus\": {{user_userStatus}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/user/{{user_name}}",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"{{user_name}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonResponse = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify response status is 200\", function(){\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Response body validations\r",
+							"\r",
+							"pm.test(\"Verify response body, code value is\" + jsonResponse.code, function(){\r",
+							"    pm.expect(200).to.eql(jsonResponse.code);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response body, type value is\" + jsonResponse.type, function(){\r",
+							"    pm.expect(\"unknown\").to.eql(jsonResponse.type);\r",
+							"});\r",
+							"    \r",
+							"\r",
+							"//Response time validation\r",
+							"\r",
+							"pm.test(\"Verify response time is less than 1500\", function(){\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/user/{{user_name}}",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"user",
+						"{{user_name}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "user_name",
+			"value": ""
+		},
+		{
+			"key": "user_firstName",
+			"value": ""
+		},
+		{
+			"key": "user_lastName",
+			"value": ""
+		},
+		{
+			"key": "user_email",
+			"value": ""
+		},
+		{
+			"key": "user_password",
+			"value": ""
+		},
+		{
+			"key": "user_phone",
+			"value": ""
+		},
+		{
+			"key": "user_userStatus",
+			"value": ""
+		}
+	]
+}
